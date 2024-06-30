@@ -1,0 +1,5 @@
+#if($type)${type}#end#if($scope)(${scope})#end: #if($subject)${subject}#end
+#if($body)${newline}${newline}${body}#end
+#if($changes)${newline}${newline}BREAKING CHANGE: ${changes}#end
+#if($closes)${newline}${newline}Closes ${closes}#end
+#if($skipCi)${newline}${newline}${skipCi}#end

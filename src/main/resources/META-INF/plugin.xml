@@ -1,0 +1,57 @@
+<idea-plugin>
+    <id>commit-message-helper-idea-plugin</id>
+    <name>Git Commit Message Helper</name>
+    <vendor email="fulinlin9527@outlook.com" url="https://github.com/AutismSuperman">FuLinLin</vendor>
+    <version>1.4.1</version>
+
+
+    <description><![CDATA[<p>Description notes will be filled by gradle build</p>]]></description>
+
+    <change-notes><![CDATA[<p>Change notes will be filled by gradle build</p>]]></change-notes>
+
+
+    <idea-version since-build="203.*"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.vcs</depends>
+
+
+    <application-components>
+    </application-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <applicationService
+                serviceImplementation="com.fulinlin.storage.GitCommitMessageHelperSettings"/>
+        <projectService
+                serviceImplementation="com.fulinlin.storage.GitCommitMessageStorage"/>
+
+        <applicationConfigurable groupId="null"
+                                 id="plugins.gitcommitmessagehelper"
+                                 displayName="GitCommitMessageHelper"
+                                 instance="com.fulinlin.configurable.CentralSettingConfigurable"/>
+
+        <applicationConfigurable
+                instance="com.fulinlin.configurable.TemplateConfigurable"
+                id="plugins.gitcommitmessagehelper.template"
+                groupId="plugins.gitcommitmessagehelper" displayName="Commit Template"/>
+
+    </extensions>
+
+
+    <resource-bundle>i18n.info</resource-bundle>
+
+
+    <actions>
+        <action id="Commit.Button" class="com.fulinlin.action.CreateCommitAction"
+                text="Create Commit Message"
+                description="Create commit message"
+                icon="PluginIcons.EDIT">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
+        </action>
+    </actions>
+
+
+</idea-plugin>
