@@ -29,7 +29,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    pluginName = project.pluginName
+    pluginName = 'AyGitCommitHelp'
     version = project.platformVersion
     type = project.platformType
     downloadSources = true
