@@ -36,7 +36,6 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
     private static final Logger log = Logger.getInstance(GitCommitMessageHelperSettings.class);
     private final static Gson GSON = new Gson();
     private DataSettings dataSettings;
-
     private CentralSettings centralSettings;
 
     public GitCommitMessageHelperSettings() {
