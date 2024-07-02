@@ -14,7 +14,6 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.rits.cloning.Cloner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,6 +34,7 @@ import java.util.Objects;
         storages = {@Storage(value = "ay_git_commit_message_helper_settings.xml")})
 public class GitCommitMessageHelperSettings implements PersistentStateComponent<GitCommitMessageHelperSettings> {
     private static final Logger log = Logger.getInstance(GitCommitMessageHelperSettings.class);
+    private final static Gson GSON = new Gson();
     private DataSettings dataSettings;
 
     private CentralSettings centralSettings;
@@ -220,11 +220,17 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
     }
 
     @Override
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public GitCommitMessageHelperSettings clone() {
-        Cloner cloner = new Cloner();
-        cloner.nullInsteadOfClone();
-        return cloner.deepClone(this);
+        String json = GSON.toJson(this);
+        return GSON.fromJson(json, GitCommitMessageHelperSettings.class);
     }
+
+//    @Override
+//    @SuppressWarnings("MethodDoesntCallSuperMethod")
+//    public GitCommitMessageHelperSettings clone() {
+//        Cloner cloner = new Cloner();
+//        cloner.nullInsteadOfClone();
+//        return cloner.deepClone(this);
+//    }
 
 }
