@@ -110,7 +110,9 @@ public class ScopeTable extends JBTable {
 
     public void removeSelectedAliases() {
         final int[] selectedRows = getSelectedRows();
-        if (selectedRows.length == 0) return;
+        if (selectedRows.length == 0) {
+            return;
+        }
         Arrays.sort(selectedRows);
         final int originalRow = selectedRows[0];
         for (int i = selectedRows.length - 1; i >= 0; i--) {
@@ -168,7 +170,7 @@ public class ScopeTable extends JBTable {
         }
         final int selectedRow = getSelectedRow();
         final ScopeAlias typeAlias = scopeAliases.get(selectedRow);
-        final AliasEditor editor = new AliasEditor(PluginBundle.get("setting.alias.edit.title"), typeAlias.getTitle(), typeAlias.getDescription());
+        final AliasEditor editor = new AliasEditor(PluginBundle.get("setting.alias.edit.scope"), typeAlias.getTitle(), typeAlias.getDescription());
         if (editor.showAndGet()) {
             typeAlias.setTitle(editor.getTitle());
             typeAlias.setDescription(editor.getDescription());

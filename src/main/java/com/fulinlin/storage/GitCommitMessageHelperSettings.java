@@ -4,6 +4,7 @@ import com.fulinlin.constant.GitCommitConstants;
 import com.fulinlin.localization.PluginBundle;
 import com.fulinlin.model.CentralSettings;
 import com.fulinlin.model.DataSettings;
+import com.fulinlin.model.GitmojiInfo;
 import com.fulinlin.model.TypeAlias;
 import com.fulinlin.model.enums.TypeDisplayStyleEnum;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -155,6 +156,14 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
         typeAliases.add(new TypeAlias("chore", PluginBundle.get("chore.description")));
         typeAliases.add(new TypeAlias("revert", PluginBundle.get("revert.description")));
         return typeAliases;
+    }
+
+
+    private static List<GitmojiInfo> getGitmojiInfos() {
+        // GitmojiInfo(String emoji, String code, String description)
+        List<GitmojiInfo> gitmojiInfos = new LinkedList<>();
+
+        return gitmojiInfos;
     }
 
 

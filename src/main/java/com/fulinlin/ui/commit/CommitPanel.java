@@ -212,10 +212,10 @@ public class CommitPanel {
                 gitmojis = new ArrayList<>();
             }
             GitmojiInfo defaultMoji = new GitmojiInfo();
-            defaultMoji.setTitle("empty");
+            defaultMoji.setCode("");
             defaultMoji.setDescription("<empty>");
             gitmoji.addItem(defaultMoji);
-            gitmojis.sort(Comparator.comparing(GitmojiInfo::getTitle));
+            gitmojis.sort(Comparator.comparing(GitmojiInfo::getCode));
             for (GitmojiInfo moji : gitmojis) {
                 gitmoji.addItem(moji);
             }

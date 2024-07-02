@@ -73,10 +73,10 @@ public class GitmojiTable extends JBTable {
 
 
     public void addAlias() {
-        final AliasEditor macroEditor = new AliasEditor(PluginBundle.get("setting.alias.add.title"), "", "");
+        final MojiEditor macroEditor = new MojiEditor(PluginBundle.get("setting.alias.add.title"), "", "", "");
         if (macroEditor.showAndGet()) {
             final String name = macroEditor.getTitle();
-            gitmoji.add(new GitmojiInfo(macroEditor.getTitle(), macroEditor.getDescription()));
+            gitmoji.add(new GitmojiInfo(macroEditor.getEmoji(), macroEditor.getCode(), macroEditor.getName(), macroEditor.getDescription()));
             final int index = indexOfAliasWithName(name);
             log.assertTrue(index >= 0);
             myTableModel.fireTableDataChanged();
@@ -148,7 +148,7 @@ public class GitmojiTable extends JBTable {
     private int indexOfAliasWithName(String name) {
         for (int i = 0; i < gitmoji.size(); i++) {
             final GitmojiInfo typeAlias = gitmoji.get(i);
-            if (name.equals(typeAlias.getTitle())) {
+            if (name.equals(typeAlias.getName())) {
                 return i;
             }
         }
@@ -170,10 +170,12 @@ public class GitmojiTable extends JBTable {
         }
         final int selectedRow = getSelectedRow();
         final GitmojiInfo typeAlias = gitmoji.get(selectedRow);
-        final AliasEditor editor = new AliasEditor(PluginBundle.get("setting.alias.edit.title"), typeAlias.getTitle(), typeAlias.getDescription());
+        final MojiEditor editor = new MojiEditor(typeAlias.getName(), typeAlias.getCode(), typeAlias.getEmoji(), typeAlias.getDescription());
         if (editor.showAndGet()) {
-            typeAlias.setTitle(editor.getTitle());
+            typeAlias.setCode(editor.getCode());
             typeAlias.setDescription(editor.getDescription());
+            typeAlias.setName(editor.getName());
+            typeAlias.setEmoji(editor.getEmoji());
             myTableModel.fireTableDataChanged();
         }
         return true;
@@ -211,7 +213,7 @@ public class GitmojiTable extends JBTable {
             final GitmojiInfo pair = gitmoji.get(rowIndex);
             switch (columnIndex) {
                 case NAME_COLUMN:
-                    return pair.getTitle();
+                    return pair.getCode();
                 case VALUE_COLUMN:
                     return pair.getDescription();
             }
