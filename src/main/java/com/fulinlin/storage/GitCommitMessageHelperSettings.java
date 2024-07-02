@@ -220,7 +220,8 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
 
     @Override
     public GitCommitMessageHelperSettings clone() {
-        return this;
+        String json = GSON.toJson(this);
+        return GSON.fromJson(json, GitCommitMessageHelperSettings.class);
     }
 
 //    @Override
