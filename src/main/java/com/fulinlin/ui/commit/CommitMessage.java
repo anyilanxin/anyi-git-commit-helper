@@ -16,16 +16,17 @@ public class CommitMessage {
 
     public CommitMessage(GitCommitMessageHelperSettings settings,
                          TypeAlias typeAlias,
+                         String gitmoji,
                          String changeScope,
                          String shortDescription,
                          String longDescription,
                          String closedIssues,
                          String breakingChanges,
-                         String skipCi
-    ) {
+                         String skipCi) {
         this.content = buildContent(
                 settings,
                 typeAlias,
+                gitmoji,
                 changeScope,
                 shortDescription,
                 longDescription,
@@ -37,19 +38,22 @@ public class CommitMessage {
 
     private String buildContent(GitCommitMessageHelperSettings settings,
                                 TypeAlias typeAlias,
+                                String gitmoji,
                                 String changeScope,
                                 String shortDescription,
                                 String longDescription,
                                 String breakingChanges,
                                 String closedIssues,
-                                String skipCi
-    ) {
+                                String skipCi) {
 
         CommitTemplate commitTemplate = new CommitTemplate();
         if (typeAlias != null) {
             if (StringUtils.isNotBlank(typeAlias.getTitle())) {
                 commitTemplate.setType(typeAlias.getTitle());
             }
+        }
+        if (StringUtils.isNotBlank(gitmoji)) {
+            commitTemplate.setEmoji(gitmoji);
         }
         if (StringUtils.isNotBlank(changeScope)) {
             commitTemplate.setScope(changeScope);

@@ -37,7 +37,7 @@ public class CommitPanel {
     private JComboBox<String> skipCiComboBox;
     private JLabel skipCiLabel;
     private JButton addScope;
-    private JComboBox<GitmojiInfo> gitmoji;
+    private JComboBox<GitmojiInfo> gitemoji;
     private ButtonGroup buttonGroup;
 
 
@@ -205,7 +205,7 @@ public class CommitPanel {
         }
 
         if (centralSettings.getHidden().getGitmoji()) {
-            gitmoji.setVisible(false);
+            gitemoji.setVisible(false);
         } else {
             List<GitmojiInfo> gitmojis = settings.getDateSettings().getGitmojis();
             if (gitmojis == null || gitmojis.isEmpty()) {
@@ -214,10 +214,10 @@ public class CommitPanel {
             GitmojiInfo defaultMoji = new GitmojiInfo();
             defaultMoji.setCode("");
             defaultMoji.setDescription("<empty>");
-            gitmoji.addItem(defaultMoji);
+            gitemoji.addItem(defaultMoji);
             gitmojis.sort(Comparator.comparing(GitmojiInfo::getCode));
             for (GitmojiInfo moji : gitmojis) {
-                gitmoji.addItem(moji);
+                gitemoji.addItem(moji);
             }
         }
         if (centralSettings.getHidden().getBody()) {
@@ -333,13 +333,19 @@ public class CommitPanel {
 
         }
         String scope = "";
-        Object selectedItem = changeScope.getSelectedItem();
-        if (Objects.nonNull(selectedItem)) {
-            scope = ((ScopeAlias) selectedItem).title;
+        Object scopeSelectedItem = changeScope.getSelectedItem();
+        if (Objects.nonNull(scopeSelectedItem)) {
+            scope = ((ScopeAlias) scopeSelectedItem).getTitle();
+        }
+        String gitEmoji = "";
+        Object gitEmojiSelectedItem = gitemoji.getSelectedItem();
+        if (Objects.nonNull(gitEmojiSelectedItem)) {
+            gitEmoji = ((GitmojiInfo) gitEmojiSelectedItem).getCode();
         }
         return new CommitMessage(
                 settings,
                 type,
+                gitEmoji,
                 scope,
                 shortDescription.getText().trim(),
                 longDescription.getText().trim(),
@@ -390,7 +396,13 @@ public class CommitPanel {
         if (Objects.nonNull(selectedItem)) {
             scope = ((ScopeAlias) selectedItem).title;
         }
+        String gitEmoji = "";
+        Object gitEmojiSelectedItem = gitemoji.getSelectedItem();
+        if (Objects.nonNull(gitEmojiSelectedItem)) {
+            gitEmoji = ((GitmojiInfo) gitEmojiSelectedItem).getCode();
+        }
         commitTemplate.setSkipCi(skipCi.trim());
+        commitTemplate.setEmoji(gitEmoji);
         commitTemplate.setScope(scope);
         commitTemplate.setSubject(shortDescription.getText().trim());
         commitTemplate.setBody(longDescription.getText().trim());

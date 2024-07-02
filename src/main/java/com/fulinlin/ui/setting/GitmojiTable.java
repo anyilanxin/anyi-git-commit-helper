@@ -1,6 +1,5 @@
 package com.fulinlin.ui.setting;
 
-import com.fulinlin.localization.PluginBundle;
 import com.fulinlin.model.GitmojiInfo;
 import com.fulinlin.storage.GitCommitMessageHelperSettings;
 import com.intellij.openapi.diagnostic.Logger;
@@ -26,8 +25,9 @@ import java.util.List;
 public class GitmojiTable extends JBTable {
 
     private static final Logger log = Logger.getInstance(GitmojiTable.class);
-    private static final int NAME_COLUMN = 0;
-    private static final int VALUE_COLUMN = 1;
+    private static final int CODE_COLUMN = 0;
+    private static final int EMOJI_COLUMN = 1;
+    private static final int DESCRIPTION_COLUMN = 2;
     private final MyTableModel myTableModel = new MyTableModel();
 
 
@@ -38,8 +38,9 @@ public class GitmojiTable extends JBTable {
      */
     public GitmojiTable() {
         setModel(myTableModel);
-        TableColumn column = getColumnModel().getColumn(NAME_COLUMN);
-        TableColumn valueColumn = getColumnModel().getColumn(VALUE_COLUMN);
+        TableColumn column = getColumnModel().getColumn(CODE_COLUMN);
+        TableColumn emojiColumn = getColumnModel().getColumn(EMOJI_COLUMN);
+        TableColumn descriptionColumn = getColumnModel().getColumn(DESCRIPTION_COLUMN);
         column.setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -52,7 +53,8 @@ public class GitmojiTable extends JBTable {
             }
         });
         setColumnSize(column, 150, 250, 150);
-        setColumnSize(valueColumn, 550, 750, 550);
+        setColumnSize(emojiColumn, 150, 250, 150);
+        setColumnSize(descriptionColumn, 550, 750, 550);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
@@ -68,15 +70,15 @@ public class GitmojiTable extends JBTable {
 
 
     public String getAliasValueAt(int row) {
-        return (String) getValueAt(row, VALUE_COLUMN);
+        return (String) getValueAt(row, CODE_COLUMN);
     }
 
 
     public void addAlias() {
-        final MojiEditor macroEditor = new MojiEditor(PluginBundle.get("setting.alias.add.title"), "", "", "");
+        final MojiEditor macroEditor = new MojiEditor("", "", "");
         if (macroEditor.showAndGet()) {
             final String name = macroEditor.getTitle();
-            gitmoji.add(new GitmojiInfo(macroEditor.getEmoji(), macroEditor.getCode(), macroEditor.getName(), macroEditor.getDescription()));
+            gitmoji.add(new GitmojiInfo(macroEditor.getEmoji(), macroEditor.getCode(), macroEditor.getDescription()));
             final int index = indexOfAliasWithName(name);
             log.assertTrue(index >= 0);
             myTableModel.fireTableDataChanged();
@@ -148,7 +150,7 @@ public class GitmojiTable extends JBTable {
     private int indexOfAliasWithName(String name) {
         for (int i = 0; i < gitmoji.size(); i++) {
             final GitmojiInfo typeAlias = gitmoji.get(i);
-            if (name.equals(typeAlias.getName())) {
+            if (name.equals(typeAlias.getCode())) {
                 return i;
             }
         }
@@ -170,11 +172,10 @@ public class GitmojiTable extends JBTable {
         }
         final int selectedRow = getSelectedRow();
         final GitmojiInfo typeAlias = gitmoji.get(selectedRow);
-        final MojiEditor editor = new MojiEditor(typeAlias.getName(), typeAlias.getCode(), typeAlias.getEmoji(), typeAlias.getDescription());
+        final MojiEditor editor = new MojiEditor(typeAlias.getCode(), typeAlias.getEmoji(), typeAlias.getDescription());
         if (editor.showAndGet()) {
             typeAlias.setCode(editor.getCode());
             typeAlias.setDescription(editor.getDescription());
-            typeAlias.setName(editor.getName());
             typeAlias.setEmoji(editor.getEmoji());
             myTableModel.fireTableDataChanged();
         }
@@ -195,7 +196,7 @@ public class GitmojiTable extends JBTable {
     private class MyTableModel extends AbstractTableModel {
         @Override
         public int getColumnCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -212,9 +213,11 @@ public class GitmojiTable extends JBTable {
         public Object getValueAt(int rowIndex, int columnIndex) {
             final GitmojiInfo pair = gitmoji.get(rowIndex);
             switch (columnIndex) {
-                case NAME_COLUMN:
+                case EMOJI_COLUMN:
+                    return pair.getEmoji();
+                case CODE_COLUMN:
                     return pair.getCode();
-                case VALUE_COLUMN:
+                case DESCRIPTION_COLUMN:
                     return pair.getDescription();
             }
             log.error("Wrong indices");
@@ -224,10 +227,13 @@ public class GitmojiTable extends JBTable {
         @Override
         public String getColumnName(int columnIndex) {
             switch (columnIndex) {
-                case NAME_COLUMN:
-                    return PluginBundle.get("setting.alias.field.title");
-                case VALUE_COLUMN:
-                    return PluginBundle.get("setting.alias.field.description");
+                case EMOJI_COLUMN:
+//                    return PluginBundle.get("setting.alias.field.title");
+                    return "Emoji";
+                case CODE_COLUMN:
+                    return "Code";
+                case DESCRIPTION_COLUMN:
+                    return "Description";
             }
             return null;
         }

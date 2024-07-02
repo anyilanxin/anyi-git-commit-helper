@@ -7,6 +7,8 @@ import com.fulinlin.model.DataSettings;
 import com.fulinlin.model.GitmojiInfo;
 import com.fulinlin.model.TypeAlias;
 import com.fulinlin.model.enums.TypeDisplayStyleEnum;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -16,16 +18,21 @@ import com.rits.cloning.Cloner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @program: git-commit-message-helper
  * @author: fulin
  * @create: 2019-12-05 21:13
  **/
-@State(name = "GitCommitMessageHelperSettings",
-        storages = {@Storage(value = GitCommitConstants.ACTION_PREFIX + "-settings.xml")})
+@State(name = "ay_git_commit_message_helper_settings",
+        storages = {@Storage(value = "ay_git_commit_message_helper_settings.xml")})
 public class GitCommitMessageHelperSettings implements PersistentStateComponent<GitCommitMessageHelperSettings> {
     private static final Logger log = Logger.getInstance(GitCommitMessageHelperSettings.class);
     private DataSettings dataSettings;
@@ -105,6 +112,8 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
             dataSettings.setTemplate(GitCommitConstants.DEFAULT_TEMPLATE);
             List<TypeAlias> typeAliases = getTypeAliases();
             dataSettings.setTypeAliases(typeAliases);
+            List<GitmojiInfo> gitmojiInfos = getGitmojiInfos();
+            dataSettings.setGitmojis(gitmojiInfos);
             List<String> skipCis = getSkipCis();
             dataSettings.setSkipCis(skipCis);
         } catch (Exception e) {
@@ -119,6 +128,10 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
         if (dataSettings.getTypeAliases() == null) {
             List<TypeAlias> typeAliases = getTypeAliases();
             dataSettings.setTypeAliases(typeAliases);
+        }
+        if (dataSettings.getGitmojis() == null) {
+            List<GitmojiInfo> gitmojiInfos = getGitmojiInfos();
+            dataSettings.setGitmojis(gitmojiInfos);
         }
         if (dataSettings.getSkipCis() == null) {
             List<String> skipCis = getSkipCis();
@@ -161,9 +174,29 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
 
     private static List<GitmojiInfo> getGitmojiInfos() {
         // GitmojiInfo(String emoji, String code, String description)
-        List<GitmojiInfo> gitmojiInfos = new LinkedList<>();
+        InputStream resourceAsStream = null;
+        try {
+            resourceAsStream = GitCommitMessageHelperSettings.class.getResourceAsStream("/gitmojis.json");
+            if (Objects.nonNull(resourceAsStream)) {
+                byte[] bytes = resourceAsStream.readAllBytes();
+                String json = new String(bytes);
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<GitmojiInfo>>() {
+                }.getType();
+                return gson.fromJson(json, type);
+            }
+        } catch (IOException ignored) {
 
-        return gitmojiInfos;
+        } finally {
+            if (Objects.nonNull(resourceAsStream)) {
+                try {
+                    resourceAsStream.close();
+                } catch (IOException ignored) {
+
+                }
+            }
+        }
+        return Collections.emptyList();
     }
 
 

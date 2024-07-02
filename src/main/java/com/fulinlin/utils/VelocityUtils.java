@@ -37,6 +37,7 @@ public class VelocityUtils {
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("type", commitTemplate.getType());
         velocityContext.put("scope", commitTemplate.getScope());
+        velocityContext.put("gitemoji", commitTemplate.getEmoji());
         velocityContext.put("subject", commitTemplate.getSubject());
         velocityContext.put("body", commitTemplate.getBody());
         velocityContext.put("changes", commitTemplate.getChanges());
@@ -59,6 +60,7 @@ public class VelocityUtils {
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("setting.template.description.tip", PluginBundle.get("setting.template.description.tip"));
         velocityContext.put("setting.template.description.predefined.tip", PluginBundle.get("setting.template.description.predefined.tip"));
+        velocityContext.put("setting.template.description.gitemoji", PluginBundle.get("setting.template.description.type"));
         velocityContext.put("setting.template.description.type", PluginBundle.get("setting.template.description.type"));
         velocityContext.put("setting.template.description.scope", PluginBundle.get("setting.template.description.scope"));
         velocityContext.put("setting.template.description.subject", PluginBundle.get("setting.template.description.subject"));

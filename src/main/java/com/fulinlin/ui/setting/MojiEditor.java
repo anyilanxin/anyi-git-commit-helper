@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class MojiEditor extends DialogWrapper {
     private JPanel myMojiEditor;
-    private JTextField nameField;
     private JTextField codeField;
     private JTextField emojiField;
     private JTextField descriptionField;
@@ -17,10 +16,9 @@ public class MojiEditor extends DialogWrapper {
         boolean isOK(String name, String value);
     }
 
-    public MojiEditor(String name, String code, String emoji, String description) {
+    public MojiEditor(String code, String emoji, String description) {
         super(true);
         setTitle("Moji editor");
-        nameField.setText(name);
         codeField.setText(code);
         emojiField.setText(emoji);
         descriptionField.setText(description);
@@ -29,11 +27,6 @@ public class MojiEditor extends DialogWrapper {
 
     public JPanel getMyMojiEditor() {
         return myMojiEditor;
-    }
-
-
-    public String getName() {
-        return nameField.getText().trim();
     }
 
     public String getCode() {

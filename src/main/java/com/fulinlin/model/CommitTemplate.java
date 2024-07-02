@@ -6,7 +6,7 @@ package com.fulinlin.model;
  * @create: 2019-12-08 11:36
  **/
 public class CommitTemplate {
-
+    private String emoji;
     private String type;
     private String scope;
     private String subject;
@@ -69,5 +69,13 @@ public class CommitTemplate {
 
     public void setSkipCi(String skipCi) {
         this.skipCi = skipCi;
+    }
+
+    public String getEmoji() {
+        return emoji;
+    }
+
+    public void setEmoji(String emoji) {
+        this.emoji = emoji;
     }
 }

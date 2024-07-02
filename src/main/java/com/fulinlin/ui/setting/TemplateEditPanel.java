@@ -55,6 +55,7 @@ public class TemplateEditPanel {
     private JCheckBox closedCheckBox;
     private JCheckBox skipCiCheckBox;
     private JButton restoreDefaultsButton;
+    private JCheckBox gitMojiCheckBox;
 
 
     public TemplateEditPanel(GitCommitMessageHelperSettings settings) {
@@ -116,6 +117,7 @@ public class TemplateEditPanel {
             }
         });
         typeCheckBox.addChangeListener(e -> showPreview());
+        gitMojiCheckBox.addChangeListener(e -> showPreview());
         scopeCheckBox.addChangeListener(e -> showPreview());
         subjectCheckBox.addChangeListener(e -> showPreview());
         bodyCheckBox.addChangeListener(e -> showPreview());
@@ -205,6 +207,9 @@ public class TemplateEditPanel {
 
     private void showPreview() {
         CommitTemplate commitTemplate = new CommitTemplate();
+        if (gitMojiCheckBox.isSelected()) {
+            commitTemplate.setType("<gitemoji>");
+        }
         if (typeCheckBox.isSelected()) {
             commitTemplate.setType("<type>");
         }

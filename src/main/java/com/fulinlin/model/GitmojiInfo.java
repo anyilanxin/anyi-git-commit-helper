@@ -13,26 +13,16 @@ import org.apache.commons.text.StringEscapeUtils;
 public class GitmojiInfo extends DomainObject {
     public String emoji;
     public String code;
-    public String name;
     public String description;
 
 
     public GitmojiInfo() {
     }
 
-    public GitmojiInfo(String emoji, String code, String name, String description) {
+    public GitmojiInfo(String emoji, String code, String description) {
         this.emoji = StringEscapeUtils.escapeJava(emoji);
         this.code = StringEscapeUtils.escapeJava(code);
-        this.name = StringEscapeUtils.escapeJava(name);
         this.description = StringEscapeUtils.escapeJava(description);
-    }
-
-    public String getName() {
-        return StringEscapeUtils.unescapeJava(name);
-    }
-
-    public void setName(String name) {
-        this.name = StringEscapeUtils.escapeJava(name);
     }
 
     public String getDescription() {
@@ -61,11 +51,17 @@ public class GitmojiInfo extends DomainObject {
 
     @Override
     public String toString() {
-        if (StringUtils.isBlank(this.getEmoji())) {
-            return this.getDescription();
-        } else {
-            return String.format("%s - %s", this.getEmoji(), this.getDescription());
+        StringBuilder builder = new StringBuilder();
+        if (StringUtils.isNotBlank(emoji)) {
+            builder.append(getEmoji()).append(" ");
         }
+        if (StringUtils.isNotBlank(code)) {
+            builder.append(getCode()).append(" ");
+        }
+        if (StringUtils.isNotBlank(description)) {
+            builder.append(getDescription()).append(" ");
+        }
+        return builder.toString();
     }
 
 }
