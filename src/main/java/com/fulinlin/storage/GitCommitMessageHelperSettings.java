@@ -112,7 +112,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
             dataSettings.setTemplate(GitCommitConstants.DEFAULT_TEMPLATE);
             List<TypeAlias> typeAliases = getTypeAliases();
             dataSettings.setTypeAliases(typeAliases);
-            List<GitmojiInfo> gitmojiInfos = getGitmojiInfos();
+            List<GitmojiInfo> gitmojiInfos = getGitmojiDefaultInfos();
             dataSettings.setGitmojis(gitmojiInfos);
             List<String> skipCis = getSkipCis();
             dataSettings.setSkipCis(skipCis);
@@ -130,7 +130,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
             dataSettings.setTypeAliases(typeAliases);
         }
         if (dataSettings.getGitmojis() == null) {
-            List<GitmojiInfo> gitmojiInfos = getGitmojiInfos();
+            List<GitmojiInfo> gitmojiInfos = getGitmojiDefaultInfos();
             dataSettings.setGitmojis(gitmojiInfos);
         }
         if (dataSettings.getSkipCis() == null) {
@@ -154,7 +154,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
     }
 
     @NotNull
-    private static List<TypeAlias> getTypeAliases() {
+    public static List<TypeAlias> getTypeAliases() {
         List<TypeAlias> typeAliases = new LinkedList<>();
         // default init i18n
         typeAliases.add(new TypeAlias("feat", PluginBundle.get("feat.description")));
@@ -172,7 +172,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
     }
 
 
-    private static List<GitmojiInfo> getGitmojiInfos() {
+    public static List<GitmojiInfo> getGitmojiDefaultInfos() {
         // GitmojiInfo(String emoji, String code, String description)
         InputStream resourceAsStream = null;
         try {
@@ -221,8 +221,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
 
     @Override
     public GitCommitMessageHelperSettings clone() {
-        String json = GSON.toJson(this);
-        return GSON.fromJson(json, GitCommitMessageHelperSettings.class);
+        return this;
     }
 
 //    @Override

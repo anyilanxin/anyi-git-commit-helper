@@ -133,13 +133,12 @@ public class TemplateEditPanel {
                         .setEditAction(button -> aliasTable.editAlias())
                         .setMoveUpAction(anActionButton -> aliasTable.moveUp())
                         .setMoveDownAction(anActionButton -> aliasTable.moveDown())
-                        .addExtraAction
-                                (new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
-                                    @Override
-                                    public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-                                        aliasTable.resetDefaultAliases();
-                                    }
-                                }).createPanel(), BorderLayout.CENTER);
+                        .addExtraAction(new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
+                            @Override
+                            public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+                                aliasTable.resetDefaultAliases();
+                            }
+                        }).createPanel(), BorderLayout.CENTER);
         // Init scopeEditPanel
         scopeTable = new ScopeTable();
         scopeEditPanel.add(
@@ -149,13 +148,7 @@ public class TemplateEditPanel {
                         .setEditAction(button -> scopeTable.editAlias())
                         .setMoveUpAction(anActionButton -> scopeTable.moveUp())
                         .setMoveDownAction(anActionButton -> scopeTable.moveDown())
-                        .addExtraAction
-                                (new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
-                                    @Override
-                                    public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-                                        scopeTable.resetDefaultAliases();
-                                    }
-                                }).createPanel(), BorderLayout.CENTER);
+                        .createPanel(), BorderLayout.CENTER);
         // Init gitmojiEditPanel
         gitmojiTable = new GitmojiTable();
         gitmojiEditPanel.add(
@@ -165,13 +158,12 @@ public class TemplateEditPanel {
                         .setEditAction(button -> gitmojiTable.editAlias())
                         .setMoveUpAction(anActionButton -> gitmojiTable.moveUp())
                         .setMoveDownAction(anActionButton -> gitmojiTable.moveDown())
-                        .addExtraAction
-                                (new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
-                                    @Override
-                                    public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-                                        gitmojiTable.resetDefaultAliases();
-                                    }
-                                }).createPanel(), BorderLayout.CENTER);
+                        .addExtraAction(new AnActionButton("Reset Default GitEmoji", AllIcons.Actions.Rollback) {
+                            @Override
+                            public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+                                gitmojiTable.resetDefaultAliases();
+                            }
+                        }).createPanel(), BorderLayout.CENTER);
         // Init data
         ApplicationManager.getApplication().runWriteAction(() -> {
             templateEditor.getDocument().setText(template);

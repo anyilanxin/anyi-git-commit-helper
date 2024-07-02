@@ -134,6 +134,8 @@ public class AliasTable extends JBTable {
     }
 
     public void resetDefaultAliases() {
+        typeAliases.clear();
+        typeAliases.addAll(GitCommitMessageHelperSettings.getTypeAliases());
         myTableModel.fireTableDataChanged();
     }
 

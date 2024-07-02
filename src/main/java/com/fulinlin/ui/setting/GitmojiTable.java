@@ -138,6 +138,8 @@ public class GitmojiTable extends JBTable {
     }
 
     public void resetDefaultAliases() {
+        this.gitmoji.clear();
+        this.gitmoji.addAll(GitCommitMessageHelperSettings.getGitmojiDefaultInfos());
         myTableModel.fireTableDataChanged();
     }
 
