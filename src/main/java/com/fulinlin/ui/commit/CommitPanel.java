@@ -4,6 +4,7 @@ import com.fulinlin.localization.PluginBundle;
 import com.fulinlin.model.*;
 import com.fulinlin.model.enums.TypeDisplayStyleEnum;
 import com.fulinlin.storage.GitCommitMessageHelperSettings;
+import com.fulinlin.ui.setting.AliasEditor;
 import com.intellij.ide.ui.laf.darcula.ui.DarculaEditorTextFieldBorder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
@@ -190,18 +191,19 @@ public class CommitPanel {
             changeScope.setVisible(false);
             addScope.setVisible(false);
         } else {
-            List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
-            if (scopeAliases == null || scopeAliases.isEmpty()) {
-                scopeAliases = new ArrayList<>();
-            }
-            ScopeAlias defaultScope = new ScopeAlias();
-            defaultScope.setTitle("");
-            defaultScope.setDescription("<empty>");
-            changeScope.addItem(defaultScope);
-            scopeAliases.sort(Comparator.comparing(ScopeAlias::getTitle));
-            for (ScopeAlias scope : scopeAliases) {
-                changeScope.addItem(scope);
-            }
+            loadScope();
+            addScope.addActionListener(e -> {
+                final AliasEditor macroEditor = new AliasEditor(PluginBundle.get("setting.alias.add.scope"), "", "");
+                if (macroEditor.showAndGet()) {
+                    List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
+                    if (scopeAliases == null) {
+                        scopeAliases = new ArrayList<>();
+                    }
+                    scopeAliases.add(new ScopeAlias(macroEditor.getTitle(), macroEditor.getDescription()));
+                    settings.getDateSettings().setScopeAliases(scopeAliases);
+                    loadScope();
+                }
+            });
         }
 
         if (centralSettings.getHidden().getGitmoji()) {
@@ -409,6 +411,23 @@ public class CommitPanel {
         commitTemplate.setChanges(breakingChanges.getText().trim());
         commitTemplate.setCloses(closedIssues.getText().trim());
         return commitTemplate;
+    }
+
+
+    private void loadScope() {
+        changeScope.removeAllItems();
+        List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
+        if (scopeAliases == null || scopeAliases.isEmpty()) {
+            scopeAliases = new ArrayList<>();
+        }
+        ScopeAlias defaultScope = new ScopeAlias();
+        defaultScope.setTitle("");
+        defaultScope.setDescription("<empty>");
+        changeScope.addItem(defaultScope);
+        scopeAliases.sort(Comparator.comparing(ScopeAlias::getTitle));
+        for (ScopeAlias scope : scopeAliases) {
+            changeScope.addItem(scope);
+        }
     }
 
     JPanel getMainPanel() {

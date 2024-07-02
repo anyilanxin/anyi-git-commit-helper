@@ -73,7 +73,7 @@ public class ScopeTable extends JBTable {
 
 
     public void addAlias() {
-        final AliasEditor macroEditor = new AliasEditor(PluginBundle.get("setting.alias.add.title"), "", "");
+        final AliasEditor macroEditor = new AliasEditor(PluginBundle.get("setting.alias.add.scope"), "", "");
         if (macroEditor.showAndGet()) {
             final String name = macroEditor.getTitle();
             scopeAliases.add(new ScopeAlias(macroEditor.getTitle(), macroEditor.getDescription()));
@@ -223,7 +223,7 @@ public class ScopeTable extends JBTable {
         public String getColumnName(int columnIndex) {
             switch (columnIndex) {
                 case NAME_COLUMN:
-                    return PluginBundle.get("setting.alias.field.title");
+                    return PluginBundle.get("setting.alias.field.scope");
                 case VALUE_COLUMN:
                     return PluginBundle.get("setting.alias.field.description");
             }
