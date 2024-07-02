@@ -29,6 +29,8 @@ import java.util.Optional;
 
 public class TemplateEditPanel {
     private final AliasTable aliasTable;
+    private final ScopeTable scopeTable;
+    private final GitmojiTable gitmojiTable;
     private final Editor templateEditor;
     private final EditorTextField previewEditor;
     private final JEditorPane myDescriptionComponent;
@@ -36,6 +38,8 @@ public class TemplateEditPanel {
     private JPanel mainPanel;
     private JPanel templatePanel;
     private JPanel typeEditPanel;
+    private JPanel scopeEditPanel;
+    private JPanel gitmojiEditPanel;
     private JTabbedPane tabbedPane;
     private JLabel description;
     private JLabel descriptionLabel;
@@ -56,7 +60,6 @@ public class TemplateEditPanel {
     public TemplateEditPanel(GitCommitMessageHelperSettings settings) {
         //Get setting
         this.settings = settings.clone();
-
         // Init  description 
         description.setText(PluginBundle.get("setting.description"));
         descriptionLabel.setText(PluginBundle.get("setting.template.description"));
@@ -64,6 +67,7 @@ public class TemplateEditPanel {
         previewLabel.setText(PluginBundle.get("setting.template.preview"));
         tabbedPane.setTitleAt(0, PluginBundle.get("setting.tabbed.panel.template"));
         tabbedPane.setTitleAt(1, PluginBundle.get("setting.tabbed.panel.type"));
+        tabbedPane.setTitleAt(2, PluginBundle.get("setting.tabbed.panel.scope"));
         restoreDefaultsButton.setText(PluginBundle.get("setting.template.restore.defaults"));
 
         // Init descriptionPanel
@@ -134,7 +138,38 @@ public class TemplateEditPanel {
                                         aliasTable.resetDefaultAliases();
                                     }
                                 }).createPanel(), BorderLayout.CENTER);
-
+        // Init scopeEditPanel
+        scopeTable = new ScopeTable();
+        scopeEditPanel.add(
+                ToolbarDecorator.createDecorator(scopeTable)
+                        .setAddAction(button -> scopeTable.addAlias())
+                        .setRemoveAction(button -> scopeTable.removeSelectedAliases())
+                        .setEditAction(button -> scopeTable.editAlias())
+                        .setMoveUpAction(anActionButton -> scopeTable.moveUp())
+                        .setMoveDownAction(anActionButton -> scopeTable.moveDown())
+                        .addExtraAction
+                                (new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
+                                    @Override
+                                    public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+                                        scopeTable.resetDefaultAliases();
+                                    }
+                                }).createPanel(), BorderLayout.CENTER);
+        // Init gitmojiEditPanel
+        gitmojiTable = new GitmojiTable();
+        gitmojiEditPanel.add(
+                ToolbarDecorator.createDecorator(gitmojiTable)
+                        .setAddAction(button -> gitmojiTable.addAlias())
+                        .setRemoveAction(button -> gitmojiTable.removeSelectedAliases())
+                        .setEditAction(button -> gitmojiTable.editAlias())
+                        .setMoveUpAction(anActionButton -> gitmojiTable.moveUp())
+                        .setMoveDownAction(anActionButton -> gitmojiTable.moveDown())
+                        .addExtraAction
+                                (new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
+                                    @Override
+                                    public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+                                        gitmojiTable.resetDefaultAliases();
+                                    }
+                                }).createPanel(), BorderLayout.CENTER);
         // Init data
         ApplicationManager.getApplication().runWriteAction(() -> {
             templateEditor.getDocument().setText(template);
@@ -152,6 +187,20 @@ public class TemplateEditPanel {
                 return aliasTable.editAlias();
             }
         }.installOn(aliasTable);
+        // Add  DoubleClickListener
+        new DoubleClickListener() {
+            @Override
+            protected boolean onDoubleClick(@NotNull MouseEvent e) {
+                return scopeTable.editAlias();
+            }
+        }.installOn(scopeTable);
+        // Add  DoubleClickListener
+        new DoubleClickListener() {
+            @Override
+            protected boolean onDoubleClick(@NotNull MouseEvent e) {
+                return gitmojiTable.editAlias();
+            }
+        }.installOn(gitmojiTable);
     }
 
     private void showPreview() {
@@ -186,6 +235,8 @@ public class TemplateEditPanel {
 
     public GitCommitMessageHelperSettings getSettings() {
         aliasTable.commit(settings);
+        scopeTable.commit(settings);
+        gitmojiTable.commit(settings);
         settings.getDateSettings().setTemplate(templateEditor.getDocument().getText());
         return settings;
     }
@@ -193,6 +244,8 @@ public class TemplateEditPanel {
     public void reset(GitCommitMessageHelperSettings settings) {
         this.settings = settings.clone();
         aliasTable.reset(settings);
+        scopeTable.reset(settings);
+        gitmojiTable.reset(settings);
         ApplicationManager.getApplication().runWriteAction(() ->
                 templateEditor.getDocument().setText(settings.getDateSettings().getTemplate())
         );
@@ -200,9 +253,12 @@ public class TemplateEditPanel {
     }
 
     public boolean isSettingsModified(GitCommitMessageHelperSettings settings) {
-        if (aliasTable.isModified(settings)) return true;
+        if (aliasTable.isModified(settings) || scopeTable.isModified(settings) || gitmojiTable.isModified(settings)) {
+            return true;
+        }
         return isModified(settings);
     }
+
 
     public boolean isModified(GitCommitMessageHelperSettings data) {
         if (!StringUtil.equals(settings.getDateSettings().getTemplate(), templateEditor.getDocument().getText())) {

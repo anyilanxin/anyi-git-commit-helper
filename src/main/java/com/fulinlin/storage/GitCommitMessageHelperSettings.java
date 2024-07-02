@@ -85,6 +85,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
             CentralSettings.Hidden hidden = new CentralSettings.Hidden();
             centralSettings.setHidden(hidden);
             centralSettings.getHidden().setType(Boolean.FALSE);
+            centralSettings.getHidden().setGitmoji(Boolean.FALSE);
             centralSettings.getHidden().setScope(Boolean.FALSE);
             centralSettings.getHidden().setSubject(Boolean.FALSE);
             centralSettings.getHidden().setBody(Boolean.FALSE);

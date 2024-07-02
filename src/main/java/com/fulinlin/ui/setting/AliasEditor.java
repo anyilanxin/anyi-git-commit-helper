@@ -28,6 +28,7 @@ public class AliasEditor extends DialogWrapper {
         init();
     }
 
+    @Override
     public String getTitle() {
         return titleField.getText().trim();
     }

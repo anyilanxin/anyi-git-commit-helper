@@ -68,6 +68,7 @@ public class CentralSettings {
     public static class Hidden {
         private Boolean type;
         private Boolean scope;
+        private Boolean gitmoji;
         private Boolean subject;
         private Boolean body;
         private Boolean changes;
@@ -84,6 +85,14 @@ public class CentralSettings {
 
         public Boolean getScope() {
             return scope;
+        }
+
+        public Boolean getGitmoji() {
+            return gitmoji;
+        }
+
+        public void setGitmoji(Boolean gitmoji) {
+            this.gitmoji = gitmoji;
         }
 
         public void setScope(Boolean scope) {

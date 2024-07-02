@@ -1,9 +1,7 @@
 package com.fulinlin.ui.commit;
 
 import com.fulinlin.localization.PluginBundle;
-import com.fulinlin.model.CentralSettings;
-import com.fulinlin.model.CommitTemplate;
-import com.fulinlin.model.TypeAlias;
+import com.fulinlin.model.*;
 import com.fulinlin.model.enums.TypeDisplayStyleEnum;
 import com.fulinlin.storage.GitCommitMessageHelperSettings;
 import com.intellij.ide.ui.laf.darcula.ui.DarculaEditorTextFieldBorder;
@@ -13,16 +11,15 @@ import com.intellij.ui.EditorTextField;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class CommitPanel {
     private final GitCommitMessageHelperSettings settings;
     private JPanel mainPanel;
     private JComboBox<TypeAlias> changeType;
-    private JTextField changeScope;
+    private JComboBox<ScopeAlias> changeScope;
     private JTextField shortDescription;
     private EditorTextField longDescription;
     private EditorTextField breakingChanges;
@@ -39,6 +36,8 @@ public class CommitPanel {
     private JCheckBox approveCheckBox;
     private JComboBox<String> skipCiComboBox;
     private JLabel skipCiLabel;
+    private JButton addScope;
+    private JComboBox<GitmojiInfo> gitmoji;
     private ButtonGroup buttonGroup;
 
 
@@ -77,6 +76,9 @@ public class CommitPanel {
     private void settingHidden(CommitTemplate commitMessageTemplate) {
         CentralSettings centralSettings = settings.getCentralSettings();
         List<TypeAlias> typeAliases = settings.getDateSettings().getTypeAliases();
+        if (typeAliases != null && !typeAliases.isEmpty()) {
+            typeAliases.sort(Comparator.comparing(TypeAlias::getTitle));
+        }
         if (centralSettings.getHidden().getType()) {
             typeDescriptionLabel.setVisible(false);
             typePanel.setVisible(false);
@@ -186,6 +188,37 @@ public class CommitPanel {
         if (centralSettings.getHidden().getScope()) {
             scopeDescriptionLabel.setVisible(false);
             changeScope.setVisible(false);
+            addScope.setVisible(false);
+        } else {
+            List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
+            if (scopeAliases == null || scopeAliases.isEmpty()) {
+                scopeAliases = new ArrayList<>();
+            }
+            ScopeAlias defaultScope = new ScopeAlias();
+            defaultScope.setTitle("");
+            defaultScope.setDescription("<empty>");
+            changeScope.addItem(defaultScope);
+            scopeAliases.sort(Comparator.comparing(ScopeAlias::getTitle));
+            for (ScopeAlias scope : scopeAliases) {
+                changeScope.addItem(scope);
+            }
+        }
+
+        if (centralSettings.getHidden().getGitmoji()) {
+            gitmoji.setVisible(false);
+        } else {
+            List<GitmojiInfo> gitmojis = settings.getDateSettings().getGitmojis();
+            if (gitmojis == null || gitmojis.isEmpty()) {
+                gitmojis = new ArrayList<>();
+            }
+            GitmojiInfo defaultMoji = new GitmojiInfo();
+            defaultMoji.setTitle("empty");
+            defaultMoji.setDescription("<empty>");
+            gitmoji.addItem(defaultMoji);
+            gitmojis.sort(Comparator.comparing(GitmojiInfo::getTitle));
+            for (GitmojiInfo moji : gitmojis) {
+                gitmoji.addItem(moji);
+            }
         }
         if (centralSettings.getHidden().getBody()) {
             bodyDescriptionLabel.setVisible(false);
@@ -222,7 +255,8 @@ public class CommitPanel {
         }
         if (commitMessageTemplate != null) {
             // with cache init
-            changeScope.setText(commitMessageTemplate.getScope());
+            changeScope.setSelectedItem(commitMessageTemplate.getScope());
+//            changeScope.setText(commitMessageTemplate.getScope());
             shortDescription.setText(commitMessageTemplate.getSubject());
             longDescription.setText(commitMessageTemplate.getBody());
             breakingChanges.setText(commitMessageTemplate.getChanges());
@@ -298,10 +332,15 @@ public class CommitPanel {
             }
 
         }
+        String scope = "";
+        Object selectedItem = changeScope.getSelectedItem();
+        if (Objects.nonNull(selectedItem)) {
+            scope = ((ScopeAlias) selectedItem).title;
+        }
         return new CommitMessage(
                 settings,
                 type,
-                changeScope.getText().trim(),
+                scope,
                 shortDescription.getText().trim(),
                 longDescription.getText().trim(),
                 closedIssues.getText().trim(),
@@ -346,8 +385,13 @@ public class CommitPanel {
             }
 
         }
+        String scope = "";
+        Object selectedItem = changeScope.getSelectedItem();
+        if (Objects.nonNull(selectedItem)) {
+            scope = ((ScopeAlias) selectedItem).title;
+        }
         commitTemplate.setSkipCi(skipCi.trim());
-        commitTemplate.setScope(changeScope.getText().trim());
+        commitTemplate.setScope(scope);
         commitTemplate.setSubject(shortDescription.getText().trim());
         commitTemplate.setBody(longDescription.getText().trim());
         commitTemplate.setChanges(breakingChanges.getText().trim());

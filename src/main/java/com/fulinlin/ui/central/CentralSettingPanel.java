@@ -37,6 +37,7 @@ public class CentralSettingPanel {
     private JLabel typeDisplayNumberLabel;
     private JLabel skipCiDefaultValueLabel;
     private JLabel skipEnableComboboxLabel;
+    private JCheckBox gitmoji;
 
 
     public CentralSettingPanel(GitCommitMessageHelperSettings settings) {
@@ -108,6 +109,7 @@ public class CentralSettingPanel {
         // settings.getCentralSettings().getHidden().setSubject(subjectCheckBox.isSelected());
         settings.getCentralSettings().getHidden().setType(typeCheckBox.isSelected());
         settings.getCentralSettings().getHidden().setScope(scopeCheckBox.isSelected());
+        settings.getCentralSettings().getHidden().setGitmoji(gitmoji.isSelected());
         settings.getCentralSettings().getHidden().setBody(bodyCheckBox.isSelected());
         settings.getCentralSettings().getHidden().setChanges(changesCheckBox.isSelected());
         settings.getCentralSettings().getHidden().setClosed(closedCheckBox.isSelected());
@@ -139,6 +141,7 @@ public class CentralSettingPanel {
         skipCiEnableCheckBox.setSelected(settings.getCentralSettings().getSkipCiComboboxEnable());
         // Hidden Option
         typeCheckBox.setSelected(settings.getCentralSettings().getHidden().getType());
+        gitmoji.setSelected(settings.getCentralSettings().getHidden().getGitmoji());
         scopeCheckBox.setSelected(settings.getCentralSettings().getHidden().getScope());
         //subjectCheckBox.setSelected(settings.getCentralSettings().getHidden().getSubject());
         subjectCheckBox.setEnabled(false);
@@ -185,6 +188,8 @@ public class CentralSettingPanel {
         } else if (closedCheckBox.isSelected() != data.getCentralSettings().getHidden().getClosed()) {
             isModified = true;
         } else if (skipCiCheckBox.isSelected() != data.getCentralSettings().getHidden().getSkipCi()) {
+            isModified = true;
+        } else if (gitmoji.isSelected() != data.getCentralSettings().getHidden().getGitmoji()) {
             isModified = true;
         }
         return isModified;
