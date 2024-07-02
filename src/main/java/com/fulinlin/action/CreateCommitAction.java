@@ -2,8 +2,10 @@ package com.fulinlin.action;
 
 import com.fulinlin.model.CommitTemplate;
 import com.fulinlin.model.MessageStorage;
+import com.fulinlin.model.ScopeInfos;
 import com.fulinlin.storage.GitCommitMessageHelperSettings;
 import com.fulinlin.storage.GitCommitMessageStorage;
+import com.fulinlin.storage.GitCommitScopeService;
 import com.fulinlin.ui.commit.CommitDialog;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -40,9 +42,14 @@ public class CreateCommitAction extends AnAction implements DumbAware {
         GitCommitMessageStorage state = storage.getState();
         assert state != null;
         MessageStorage messageStorage = state.getMessageStorage();
+
+
+        ScopeInfos scope = GitCommitScopeService.getInstance().getScope();
         CommitDialog dialog = new CommitDialog(
-                project, settings,
-                messageStorage.getCommitTemplate()
+                project,
+                settings,
+                messageStorage.getCommitTemplate(),
+                scope
         );
         dialog.show();
         if (dialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {

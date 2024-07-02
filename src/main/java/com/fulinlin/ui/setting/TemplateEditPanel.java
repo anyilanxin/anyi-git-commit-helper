@@ -4,6 +4,7 @@ import com.fulinlin.constant.GitCommitConstants;
 import com.fulinlin.localization.PluginBundle;
 import com.fulinlin.model.CommitTemplate;
 import com.fulinlin.storage.GitCommitMessageHelperSettings;
+import com.fulinlin.storage.GitCommitScopeService;
 import com.fulinlin.ui.setting.description.DescriptionRead;
 import com.fulinlin.utils.VelocityUtils;
 import com.intellij.icons.AllIcons;
@@ -61,7 +62,7 @@ public class TemplateEditPanel {
     public TemplateEditPanel(GitCommitMessageHelperSettings settings) {
         //Get setting
         this.settings = settings.clone();
-        // Init  description 
+        // Init  description
         description.setText(PluginBundle.get("setting.description"));
         descriptionLabel.setText(PluginBundle.get("setting.template.description"));
         templateLabel.setText(PluginBundle.get("setting.template.edit"));
@@ -232,7 +233,7 @@ public class TemplateEditPanel {
 
     public GitCommitMessageHelperSettings getSettings() {
         aliasTable.commit(settings);
-        scopeTable.commit(settings);
+        scopeTable.commit();
         gitmojiTable.commit(settings);
         settings.getDateSettings().setTemplate(templateEditor.getDocument().getText());
         return settings;
@@ -241,7 +242,7 @@ public class TemplateEditPanel {
     public void reset(GitCommitMessageHelperSettings settings) {
         this.settings = settings.clone();
         aliasTable.reset(settings);
-        scopeTable.reset(settings);
+        scopeTable.reset();
         gitmojiTable.reset(settings);
         ApplicationManager.getApplication().runWriteAction(() ->
                 templateEditor.getDocument().setText(settings.getDateSettings().getTemplate())
@@ -250,7 +251,8 @@ public class TemplateEditPanel {
     }
 
     public boolean isSettingsModified(GitCommitMessageHelperSettings settings) {
-        if (aliasTable.isModified(settings) || scopeTable.isModified(settings) || gitmojiTable.isModified(settings)) {
+        GitCommitScopeService instance = GitCommitScopeService.getInstance();
+        if (aliasTable.isModified(settings) || scopeTable.isModified(instance) || gitmojiTable.isModified(settings)) {
             return true;
         }
         return isModified(settings);

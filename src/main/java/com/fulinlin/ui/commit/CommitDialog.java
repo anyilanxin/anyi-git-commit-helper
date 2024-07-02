@@ -2,6 +2,7 @@ package com.fulinlin.ui.commit;
 
 import com.fulinlin.localization.PluginBundle;
 import com.fulinlin.model.CommitTemplate;
+import com.fulinlin.model.ScopeInfos;
 import com.fulinlin.storage.GitCommitMessageHelperSettings;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -13,9 +14,12 @@ public class CommitDialog extends DialogWrapper {
 
     private final CommitPanel panel;
 
-    public CommitDialog(@Nullable Project project, GitCommitMessageHelperSettings settings, CommitTemplate commitMessageTemplate) {
+    public CommitDialog(@Nullable Project project,
+                        GitCommitMessageHelperSettings settings,
+                        CommitTemplate commitMessageTemplate,
+                        ScopeInfos scopeInfos) {
         super(project);
-        panel = new CommitPanel(project, settings, commitMessageTemplate);
+        panel = new CommitPanel(project, settings, commitMessageTemplate, scopeInfos);
         setTitle(PluginBundle.get("commit.panel.title"));
         setOKButtonText(PluginBundle.get("commit.panel.ok.button"));
         setCancelButtonText(PluginBundle.get("commit.panel.cancel.button"));

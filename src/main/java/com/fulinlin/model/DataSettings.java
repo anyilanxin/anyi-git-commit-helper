@@ -10,7 +10,6 @@ import java.util.List;
 public class DataSettings {
     private String template;
     private List<TypeAlias> typeAliases;
-    private List<ScopeAlias> scopeAliases;
     private List<GitmojiInfo> gitmojis;
     private List<String> skipCis;
 
@@ -30,20 +29,12 @@ public class DataSettings {
         this.typeAliases = typeAliases;
     }
 
-    public List<ScopeAlias> getScopeAliases() {
-        return scopeAliases;
-    }
-
     public List<GitmojiInfo> getGitmojis() {
         return gitmojis;
     }
 
     public void setGitmojis(List<GitmojiInfo> gitmojis) {
         this.gitmojis = gitmojis;
-    }
-
-    public void setScopeAliases(List<ScopeAlias> scopeAliases) {
-        this.scopeAliases = scopeAliases;
     }
 
     public List<String> getSkipCis() {

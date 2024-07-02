@@ -2,7 +2,8 @@ package com.fulinlin.ui.setting;
 
 import com.fulinlin.localization.PluginBundle;
 import com.fulinlin.model.ScopeAlias;
-import com.fulinlin.storage.GitCommitMessageHelperSettings;
+import com.fulinlin.model.ScopeInfos;
+import com.fulinlin.storage.GitCommitScopeService;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.table.JBTable;
@@ -13,10 +14,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.*;
 
 /**
  * @program: git-commit-message-helper
@@ -131,16 +130,19 @@ public class ScopeTable extends JBTable {
     }
 
 
-    public void commit(GitCommitMessageHelperSettings settings) {
-        settings.getDateSettings().setScopeAliases(new LinkedList<>(scopeAliases));
+    public void commit() {
+        ScopeInfos scopeInfos = new ScopeInfos();
+        scopeInfos.setScopeAlias(new ArrayList<>(scopeAliases));
+        GitCommitScopeService.getInstance().saveScope(scopeInfos);
     }
 
     public void resetDefaultAliases() {
         myTableModel.fireTableDataChanged();
     }
 
-    public void reset(GitCommitMessageHelperSettings settings) {
-        obtainAliases(scopeAliases, settings);
+    public void reset() {
+        GitCommitScopeService instance = GitCommitScopeService.getInstance();
+        obtainAliases(scopeAliases, instance);
         myTableModel.fireTableDataChanged();
     }
 
@@ -155,9 +157,9 @@ public class ScopeTable extends JBTable {
         return -1;
     }
 
-    private void obtainAliases(@NotNull List<ScopeAlias> aliases, GitCommitMessageHelperSettings settings) {
+    private void obtainAliases(@NotNull List<ScopeAlias> aliases, GitCommitScopeService instance) {
         aliases.clear();
-        List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
+        List<ScopeAlias> scopeAliases = GitCommitScopeService.getInstance().getScope().getScopeAlias();
         if (scopeAliases != null && !scopeAliases.isEmpty()) {
             aliases.addAll(scopeAliases);
         }
@@ -179,9 +181,9 @@ public class ScopeTable extends JBTable {
         return true;
     }
 
-    public boolean isModified(GitCommitMessageHelperSettings settings) {
+    public boolean isModified(GitCommitScopeService instance) {
         final List<ScopeAlias> aliases = new LinkedList<>();
-        obtainAliases(aliases, settings);
+        obtainAliases(aliases, instance);
         return !aliases.equals(scopeAliases);
     }
 

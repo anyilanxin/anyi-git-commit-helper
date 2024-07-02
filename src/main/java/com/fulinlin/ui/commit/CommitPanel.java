@@ -18,6 +18,7 @@ import java.util.*;
 
 public class CommitPanel {
     private final GitCommitMessageHelperSettings settings;
+    private final ScopeInfos scopeInfos;
     private JPanel mainPanel;
     private JComboBox<TypeAlias> changeType;
     private JComboBox<ScopeAlias> changeScope;
@@ -42,8 +43,12 @@ public class CommitPanel {
     private ButtonGroup buttonGroup;
 
 
-    public CommitPanel(Project project, GitCommitMessageHelperSettings settings, CommitTemplate commitMessageTemplate) {
+    public CommitPanel(Project project,
+                       GitCommitMessageHelperSettings settings,
+                       CommitTemplate commitMessageTemplate,
+                       ScopeInfos scopeInfos) {
         this.settings = settings;
+        this.scopeInfos = scopeInfos;
         // Personalized UI configuration
         typeDescriptionLabel.setText(PluginBundle.get("commit.panel.type.field"));
         scopeDescriptionLabel.setText(PluginBundle.get("commit.panel.scope.field"));
@@ -195,12 +200,12 @@ public class CommitPanel {
             addScope.addActionListener(e -> {
                 final AliasEditor macroEditor = new AliasEditor(PluginBundle.get("setting.alias.add.scope"), "", "");
                 if (macroEditor.showAndGet()) {
-                    List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
+                    List<ScopeAlias> scopeAliases = scopeInfos.getScopeAlias();
                     if (scopeAliases == null) {
                         scopeAliases = new ArrayList<>();
                     }
                     scopeAliases.add(new ScopeAlias(macroEditor.getTitle(), macroEditor.getDescription()));
-                    settings.getDateSettings().setScopeAliases(scopeAliases);
+                    scopeInfos.setScopeAlias(scopeAliases);
                     loadScope();
                 }
             });
@@ -416,7 +421,7 @@ public class CommitPanel {
 
     private void loadScope() {
         changeScope.removeAllItems();
-        List<ScopeAlias> scopeAliases = settings.getDateSettings().getScopeAliases();
+        List<ScopeAlias> scopeAliases = scopeInfos.getScopeAlias();
         if (scopeAliases == null || scopeAliases.isEmpty()) {
             scopeAliases = new ArrayList<>();
         }

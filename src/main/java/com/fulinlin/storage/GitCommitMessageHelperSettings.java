@@ -10,7 +10,6 @@ import com.fulinlin.model.enums.TypeDisplayStyleEnum;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.RoamingType;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.diagnostic.Logger;
@@ -32,7 +31,7 @@ import java.util.Objects;
  * @create: 2019-12-05 21:13
  **/
 @State(name = "ay_git_commit_message_helper_settings",
-        storages = {@Storage(value = "ay_git_commit_message_helper_settings.xml", roamingType = RoamingType.DISABLED)})
+        storages = {@Storage(value = "ay_git_commit_message_helper_settings.xml")})
 public class GitCommitMessageHelperSettings implements PersistentStateComponent<GitCommitMessageHelperSettings> {
     private static final Logger log = Logger.getInstance(GitCommitMessageHelperSettings.class);
     private final static Gson GSON = new Gson();
