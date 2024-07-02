@@ -1,8 +1,8 @@
 <idea-plugin>
-    <id>commit-message-helper-idea-plugin</id>
-    <name>Git Commit Message Helper</name>
+    <id>ay-git-commit-help</id>
+    <name>AyGitCommitHelp</name>
     <vendor email="fulinlin9527@outlook.com" url="https://github.com/AutismSuperman">AnYiLanXin</vendor>
-    <version>1.4.1</version>
+    <version>1.0.0</version>
 
 
     <description><![CDATA[<p>Description notes will be filled by gradle build</p>]]></description>
