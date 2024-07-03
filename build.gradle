@@ -49,7 +49,7 @@ processResources {
     filteringCharset = 'UTF-8'
     include('**/*.*')
     filesMatching('plugin.xml') {
-        filter(ReplaceTokens, tokens: ['version': version])
+        filter(ReplaceTokens, tokens: ['version': version, 'pluginName': pluginName])
     }
 }
 
