@@ -17,9 +17,7 @@
 <idea-plugin>
     <id>ay-git-commit-help</id>
     <name>@pluginName@</name>
-    <vendor email="fulinlin9527@outlook.com" url="https://github.com/AutismSuperman">AnYiLanXin</vendor>
-    <version>@version@</version>
-
+    <vendor email="anyilanxin@aliyun.com" url="https://anyilanxin.com">AnYiLanXin</vendor>
 
     <description><![CDATA[<p>Description notes will be filled by gradle build</p>]]></description>
 
