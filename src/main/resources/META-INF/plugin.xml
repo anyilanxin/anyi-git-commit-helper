@@ -11,7 +11,7 @@
 
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="241.*"/>
+    <idea-version since-build="241.8102.112"/>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -53,7 +53,7 @@
         <action id="Commit.Button" class="com.anyilanxin.plugin.githelper.action.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message"
-                icon="PluginIcons.EDIT">
+                icon="com.anyilanxin.plugin.githelper.icon.PluginIcons.EDIT">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
         </action>
     </actions>

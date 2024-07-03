@@ -38,7 +38,6 @@ public class VelocityUtils {
         engine = new VelocityEngine();
         engine.setProperty(RuntimeConstants.PARSER_POOL_SIZE, 20);
         engine.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
-        engine.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
 
         Properties props = new Properties();
         props.put("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
@@ -61,9 +60,9 @@ public class VelocityUtils {
         velocityContext.put("skipCi", commitTemplate.getSkipCi());
         velocityContext.put("newline", "\n");
         velocityContext.put("velocityTool", new VelocityTool());
-        String VM_LOG_TAG = "GitCommitMessage VelocityUtils";
+        String vmLogTag = "GitCommitMessage VelocityUtils";
         try {
-            engine.evaluate(velocityContext, writer, VM_LOG_TAG, template);
+            engine.evaluate(velocityContext, writer, vmLogTag, template);
             return writer.toString();
         } catch (Exception e) {
             throw new TemplateConvertException(PluginBundle.get("setting.template.description.error"));
@@ -87,9 +86,9 @@ public class VelocityUtils {
         velocityContext.put("setting.template.description.newLine", PluginBundle.get("setting.template.description.newLine"));
         velocityContext.put("setting.template.description.used", PluginBundle.get("setting.template.description.used"));
         velocityContext.put("globals", velocityContext);
-        String VM_LOG_TAG = "GitCommitMessage Description VelocityUtils";
+        String vmLogTag = "GitCommitMessage Description VelocityUtils";
         try {
-            engine.evaluate(velocityContext, writer, VM_LOG_TAG, html);
+            engine.evaluate(velocityContext, writer, vmLogTag, html);
             return writer.toString();
         } catch (Exception e) {
             throw new TemplateConvertException(PluginBundle.get("setting.template.description.error"));
