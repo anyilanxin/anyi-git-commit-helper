@@ -18,7 +18,7 @@
     <id>ay-git-commit-help</id>
     <name>AyGitCommitHelp</name>
     <vendor email="fulinlin9527@outlook.com" url="https://github.com/AutismSuperman">AnYiLanXin</vendor>
-    <version>1.0.0</version>
+    <version>@version@</version>
 
 
     <description><![CDATA[<p>Description notes will be filled by gradle build</p>]]></description>
