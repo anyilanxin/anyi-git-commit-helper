@@ -24,7 +24,6 @@ import com.anyilanxin.plugin.githelper.model.GitmojiInfo;
 import com.anyilanxin.plugin.githelper.model.TypeAlias;
 import com.anyilanxin.plugin.githelper.model.enums.TypeDisplayStyleEnum;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -33,13 +32,9 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @program: git-commit-message-helper
@@ -189,29 +184,19 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
 
     public static List<GitmojiInfo> getGitmojiDefaultInfos() {
         // GitmojiInfo(String emoji, String code, String description)
-        InputStream resourceAsStream = null;
-        try {
-            resourceAsStream = GitCommitMessageHelperSettings.class.getResourceAsStream("/gitmojis.json");
-            if (Objects.nonNull(resourceAsStream)) {
-                byte[] bytes = resourceAsStream.readAllBytes();
-                String json = new String(bytes);
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<GitmojiInfo>>() {
-                }.getType();
-                return gson.fromJson(json, type);
-            }
-        } catch (IOException ignored) {
-
-        } finally {
-            if (Objects.nonNull(resourceAsStream)) {
-                try {
-                    resourceAsStream.close();
-                } catch (IOException ignored) {
-
-                }
-            }
-        }
-        return Collections.emptyList();
+        List<GitmojiInfo> gitmojiInfos = new ArrayList<>(11);
+        gitmojiInfos.add(new GitmojiInfo("✨", ":sparkles:", PluginBundle.get("feat.description")));
+        gitmojiInfos.add(new GitmojiInfo("🐛", ":bug:", PluginBundle.get("fix.description")));
+        gitmojiInfos.add(new GitmojiInfo("📝", ":memo:", PluginBundle.get("docs.description")));
+        gitmojiInfos.add(new GitmojiInfo("💄", ":lipstick:", PluginBundle.get("style.description")));
+        gitmojiInfos.add(new GitmojiInfo("♻️", ":recycle:", PluginBundle.get("refactor.description")));
+        gitmojiInfos.add(new GitmojiInfo("⚡️", ":zap:", PluginBundle.get("perf.description")));
+        gitmojiInfos.add(new GitmojiInfo("✅", ":white_check_mark:", PluginBundle.get("test.description")));
+        gitmojiInfos.add(new GitmojiInfo("👷", ":construction_worker:", PluginBundle.get("build.description")));
+        gitmojiInfos.add(new GitmojiInfo("💚", ":green_heart:", PluginBundle.get("ci.description")));
+        gitmojiInfos.add(new GitmojiInfo("🧪", ":test_tube:", PluginBundle.get("chore.description")));
+        gitmojiInfos.add(new GitmojiInfo("⏪️", ":rewind:", PluginBundle.get("revert.description")));
+        return gitmojiInfos;
     }
 
 
