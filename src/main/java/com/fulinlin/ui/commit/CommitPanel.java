@@ -82,9 +82,6 @@ public class CommitPanel {
     private void settingHidden(CommitTemplate commitMessageTemplate) {
         CentralSettings centralSettings = settings.getCentralSettings();
         List<TypeAlias> typeAliases = settings.getDateSettings().getTypeAliases();
-        if (typeAliases != null && !typeAliases.isEmpty()) {
-            typeAliases.sort(Comparator.comparing(TypeAlias::getTitle));
-        }
         if (centralSettings.getHidden().getType()) {
             typeDescriptionLabel.setVisible(false);
             typePanel.setVisible(false);
