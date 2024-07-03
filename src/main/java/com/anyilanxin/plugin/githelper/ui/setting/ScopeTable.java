@@ -239,18 +239,12 @@ public class ScopeTable extends JBTable {
 
         @Override
         public String getColumnName(int columnIndex) {
-            switch (columnIndex) {
-                case NAME_COLUMN:
-                    return PluginBundle.get("setting.alias.field.scope");
-                case VALUE_COLUMN:
-                    return PluginBundle.get("setting.alias.field.description");
-            }
-            return null;
+            return switch (columnIndex) {
+                case NAME_COLUMN -> PluginBundle.get("setting.alias.field.scope");
+                case VALUE_COLUMN -> PluginBundle.get("setting.alias.field.description");
+                default -> null;
+            };
         }
 
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
-        }
     }
 }
