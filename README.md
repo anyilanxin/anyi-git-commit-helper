@@ -10,19 +10,19 @@ Install directly from the IDE plugin manager (File > Settings > Plugins > Market
 
 ## Usage
 
-![operation.gif](https://raw.githubusercontent.com/AutismSuperman/git-commit-message-helper/master/doc/image/operation.gif)
+![operation.gif](./doc/image/operation.gif)
 
 If you want to personalize the window, you can go to the settings menu to set it up
 
-![settings-0.png](https://raw.githubusercontent.com/AutismSuperman/git-commit-message-helper/master/doc/image/settings-0.png)
+![settings-0.png](./doc/image/settings-0.png)
 
 If you want to personalize your submission template can be set in the settings, the template engine here uses velocity
 
-![settings-1.png](https://raw.githubusercontent.com/AutismSuperman/git-commit-message-helper/master/doc/image/settings-1.png)
+![settings-1.png](./doc/image/settings-1.png)
 
 If you want to change the type of submission, you can change it in settings
 
-![settings-2.png](https://raw.githubusercontent.com/AutismSuperman/git-commit-message-helper/master/doc/image/settings-2.png)
+![settings-2.png](./doc/image/settings-2.png)
 
 ## License
 
