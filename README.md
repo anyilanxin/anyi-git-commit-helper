@@ -41,4 +41,3 @@ language governing permissions and limitations under the License.
 [https://github.com/x-hansong/CodeMaker](https://github.com/x-hansong/CodeMaker)  
 [https://github.com/shuzijun/leetcode-editor](https://github.com/shuzijun/leetcode-editor)
 [https://github.com/AutismSuperman/git-commit-message-helper](https://github.com/AutismSuperman/git-commit-message-helper)
-[https://github.com/patou/gitmoji-intellij-plugin](https://github.com/patou/gitmoji-intellij-plugin)
