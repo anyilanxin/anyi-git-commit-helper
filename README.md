@@ -37,7 +37,7 @@ language governing permissions and limitations under the License.
 
 ## Thank
 
-[https://github.com/MobileTribe/commit-template-idea-plugin](https://github.com/MobileTribe/commit-template-idea-plugin)  
-[https://github.com/x-hansong/CodeMaker](https://github.com/x-hansong/CodeMaker)  
-[https://github.com/shuzijun/leetcode-editor](https://github.com/shuzijun/leetcode-editor)
-[https://github.com/AutismSuperman/git-commit-message-helper](https://github.com/AutismSuperman/git-commit-message-helper)
+1. [https://github.com/MobileTribe/commit-template-idea-plugin](https://github.com/MobileTribe/commit-template-idea-plugin)
+2. [https://github.com/x-hansong/CodeMaker](https://github.com/x-hansong/CodeMaker)
+3. [https://github.com/shuzijun/leetcode-editor](https://github.com/shuzijun/leetcode-editor)
+4. [https://github.com/AutismSuperman/git-commit-message-helper](https://github.com/AutismSuperman/git-commit-message-helper)
