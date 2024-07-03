@@ -10,7 +10,8 @@
     <change-notes><![CDATA[<p>Change notes will be filled by gradle build</p>]]></change-notes>
 
 
-    <idea-version since-build="203.*"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="241.*"/>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
