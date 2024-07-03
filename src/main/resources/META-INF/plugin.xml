@@ -16,7 +16,7 @@
   -->
 <idea-plugin>
     <id>ay-git-commit-help</id>
-    <name>AyGitCommitHelp</name>
+    <name>@pluginName@</name>
     <vendor email="fulinlin9527@outlook.com" url="https://github.com/AutismSuperman">AnYiLanXin</vendor>
     <version>@version@</version>
 
@@ -51,7 +51,7 @@
 
         <applicationConfigurable groupId="null"
                                  id="plugins.gitcommitmessagehelper"
-                                 displayName="GitCommitMessageHelper"
+                                 displayName="@pluginName@"
                                  instance="com.anyilanxin.plugin.githelper.configurable.CentralSettingConfigurable"/>
 
         <applicationConfigurable
