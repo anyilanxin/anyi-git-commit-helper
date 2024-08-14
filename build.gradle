@@ -3,12 +3,16 @@ import org.apache.tools.ant.filters.ReplaceTokens
 plugins {
     id 'idea'
     id 'java'
-    id 'org.jetbrains.intellij' version '1.17.4'
+    id 'org.jetbrains.intellij.platform' version '2.0.1'
+    id "io.github.goooler.shadow" version "8.1.7"
 }
 
 repositories {
     maven { url 'https://maven.aliyun.com/repository/central/' }
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 group 'com.anyilanxin.plugin'
@@ -23,20 +27,24 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    pluginName = "${pluginName}"
-    version = "2024.2"
-    type = 'IU'
-    sandboxDir = "${rootProject.rootDir}/idea-sandbox"
-    downloadSources = true
-    updateSinceUntilBuild = false
-    buildSearchableOptions.enabled = false
+intellijPlatform {
+    pluginConfiguration {
+        name = "${pluginName}"
+        version = "${pluginVersion}"
+    }
+    buildSearchableOptions = false
+    sandboxContainer = file("${rootProject.rootDir}/idea-sandbox")
 }
 
 
 dependencies {
+    intellijPlatform {
+        intellijIdeaUltimate("2024.2")
+        pluginVerifier()
+        instrumentationTools()
+        javaCompiler()
+    }
     implementation 'org.apache.commons:commons-text:1.11.0'
-
     def lombok = "1.18.32"
     compileOnly "org.projectlombok:lombok:${lombok}"
     annotationProcessor "org.projectlombok:lombok:${lombok}"
@@ -49,10 +57,14 @@ processResources {
     filteringCharset = 'UTF-8'
     include('**/*.*')
     filesMatching('plugin.xml') {
-        filter(ReplaceTokens, tokens: ['version': version, 'pluginName': pluginName])
+        filter(ReplaceTokens, tokens: ['version': pluginVersion, 'pluginName': pluginName])
     }
 }
 
 publishPlugin {
     token.set(System.getenv("PUBLISH_TOKEN"))
+}
+
+shadowJar {
+    archiveClassifier.set('')
 }
