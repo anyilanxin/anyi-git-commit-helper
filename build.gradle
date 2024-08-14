@@ -25,7 +25,7 @@ tasks.withType(JavaCompile).configureEach {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     pluginName = "${pluginName}"
-    version = "2024.1"
+    version = "2024.2"
     type = 'IU'
     sandboxDir = "${rootProject.rootDir}/idea-sandbox"
     downloadSources = true
