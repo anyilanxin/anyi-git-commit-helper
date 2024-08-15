@@ -1,2 +1,2 @@
-rootProject.name = "${pluginName}"
+rootProject.name = 'anyi-git-commit-helper'
 
