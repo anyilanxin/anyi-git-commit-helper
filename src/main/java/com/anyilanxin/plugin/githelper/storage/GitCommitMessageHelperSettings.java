@@ -168,6 +168,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
         List<TypeAlias> typeAliases = new LinkedList<>();
         // default init i18n
         typeAliases.add(new TypeAlias("feat", PluginBundle.get("feat.description")));
+        typeAliases.add(new TypeAlias("deps", PluginBundle.get("deps.description")));
         typeAliases.add(new TypeAlias("fix", PluginBundle.get("fix.description")));
         typeAliases.add(new TypeAlias("docs", PluginBundle.get("docs.description")));
         typeAliases.add(new TypeAlias("style", PluginBundle.get("style.description")));
@@ -187,6 +188,7 @@ public class GitCommitMessageHelperSettings implements PersistentStateComponent<
         List<GitmojiInfo> gitmojiInfos = new ArrayList<>(11);
         gitmojiInfos.add(new GitmojiInfo("✨", ":sparkles:", PluginBundle.get("feat.description")));
         gitmojiInfos.add(new GitmojiInfo("🐛", ":bug:", PluginBundle.get("fix.description")));
+        gitmojiInfos.add(new GitmojiInfo("🔥", ":fire:", PluginBundle.get("fire.description")));
         gitmojiInfos.add(new GitmojiInfo("📝", ":memo:", PluginBundle.get("docs.description")));
         gitmojiInfos.add(new GitmojiInfo("💄", ":lipstick:", PluginBundle.get("style.description")));
         gitmojiInfos.add(new GitmojiInfo("♻️", ":recycle:", PluginBundle.get("refactor.description")));
