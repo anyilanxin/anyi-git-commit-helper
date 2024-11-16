@@ -12,6 +12,7 @@ bootJar/
 /config/
 /upload/
 .gradle/
+.intellijPlatform
 .gradle
 ### STS ###
 .apt_generated
