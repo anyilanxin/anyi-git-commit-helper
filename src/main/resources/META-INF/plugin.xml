@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 <idea-plugin>
-    <id>com.anyilanxin.plugin.easycode.gitcommithelper</id>
+    <id>com.anyilanxin.plugin.gitcommithelper</id>
     <name>@pluginName@</name>
     <vendor email="anyilanxin@aliyun.com" url="https://anyilanxin.com">AnYiLanXin</vendor>
 
