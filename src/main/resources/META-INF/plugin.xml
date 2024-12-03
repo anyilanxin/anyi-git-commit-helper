@@ -19,9 +19,31 @@
     <name>@pluginName@</name>
     <vendor email="anyilanxin@aliyun.com" url="https://anyilanxin.com">AnYiLanXin</vendor>
 
-    <description><![CDATA[<p>Description notes will be filled by gradle build</p>]]></description>
+    <description><![CDATA[
+      <h3>A JetBrains series plugin to help git code submission specifications</h3>
+      <h3>Features:</h3>
+      <ul>
+        <li>Custom template</li>
+        <li>Custom Type</li>
+        <li>Custom Scope</li>
+        <li>Support git emoji</li>
+      </ul>
+      <ul>
+        <li>自定义模板</li>
+        <li>自定义提交类型</li>
+        <li>自定义提交scope</li>
+        <li>支持 git emoji 表情</li>
+      </ul>
+    ]]></description>
 
-    <change-notes><![CDATA[<p>Change notes will be filled by gradle build</p>]]></change-notes>
+    <change-notes><![CDATA[
+     <p>v1.1.1</p>
+      <ul>
+        <li>1. 初始发版</li>
+      </ul>
+      <p>鸣谢 <a href="https://github.com/AutismSuperman/git-commit-message-helper">AutismSuperman提供初始代码</a>.</p>
+      <p>More <a href="https://github.com/anyilanxin/anyi-git-commit-helper">Help Info</a>.</p>
+    ]]></change-notes>
 
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
