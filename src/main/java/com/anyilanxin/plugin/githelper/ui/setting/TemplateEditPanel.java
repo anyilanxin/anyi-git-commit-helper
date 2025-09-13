@@ -150,7 +150,7 @@ public class TemplateEditPanel {
                         .setEditAction(button -> aliasTable.editAlias())
                         .setMoveUpAction(anActionButton -> aliasTable.moveUp())
                         .setMoveDownAction(anActionButton -> aliasTable.moveDown())
-                        .addExtraAction(new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
+                        .addExtraActions(new AnActionButton("Reset Default Aliases", AllIcons.Actions.Rollback) {
                             @Override
                             public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
                                 aliasTable.resetDefaultAliases();
@@ -175,7 +175,7 @@ public class TemplateEditPanel {
                         .setEditAction(button -> gitmojiTable.editAlias())
                         .setMoveUpAction(anActionButton -> gitmojiTable.moveUp())
                         .setMoveDownAction(anActionButton -> gitmojiTable.moveDown())
-                        .addExtraAction(new AnActionButton("Reset Default GitEmoji", AllIcons.Actions.Rollback) {
+                        .addExtraActions(new AnActionButton("Reset Default GitEmoji", AllIcons.Actions.Rollback) {
                             @Override
                             public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
                                 gitmojiTable.resetDefaultAliases();
